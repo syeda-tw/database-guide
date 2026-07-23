@@ -4,7 +4,7 @@ Personal notes on databases and backend-as-a-service platforms I use for storing
 
 ## What's in here
 
-- PostgreSQL
+- [PostgreSQL](./postgresql/README.md) - note added
 - MongoDB
 - Supabase
 - Firebase

@@ -1,0 +1,91 @@
+<svg width="1000" height="860" viewBox="0 0 1000 860" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1000" y2="860" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F8FAFC"/>
+      <stop offset="1" stop-color="#E2E8F0"/>
+    </linearGradient>
+    <linearGradient id="client" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#0F172A"/>
+      <stop offset="1" stop-color="#1E293B"/>
+    </linearGradient>
+    <linearGradient id="server" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#0F766E"/>
+      <stop offset="1" stop-color="#115E59"/>
+    </linearGradient>
+    <linearGradient id="process" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#2563EB"/>
+      <stop offset="1" stop-color="#1D4ED8"/>
+    </linearGradient>
+    <linearGradient id="storage" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#7C3AED"/>
+      <stop offset="1" stop-color="#6D28D9"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#0F172A" flood-opacity="0.14"/>
+    </filter>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="9" refY="6" orient="auto">
+      <path d="M2 2L10 6L2 10Z" fill="#64748B"/>
+    </marker>
+    <style>
+      .title { font: 700 32px Arial, sans-serif; fill: #0F172A; }
+      .subtitle { font: 500 16px Arial, sans-serif; fill: #475569; }
+      .box-title { font: 700 20px Arial, sans-serif; fill: white; }
+      .box-text { font: 500 14px Arial, sans-serif; fill: rgba(255,255,255,0.9); }
+      .edge { font: 600 13px Arial, sans-serif; fill: #64748B; }
+    </style>
+  </defs>
+
+  <rect width="1000" height="860" rx="24" fill="url(#bg)"/>
+
+  <text x="500" y="60" text-anchor="middle" class="title">PostgreSQL High-Level Architecture</text>
+  <text x="500" y="90" text-anchor="middle" class="subtitle">Clients connect to the postmaster, which coordinates execution and durable storage.</text>
+
+  <!-- Tier 1: Clients -->
+  <rect x="360" y="130" width="280" height="90" rx="18" fill="url(#client)" filter="url(#shadow)"/>
+  <text x="500" y="168" text-anchor="middle" class="box-title">Clients</text>
+  <text x="500" y="196" text-anchor="middle" class="box-text">Apps / APIs / psql</text>
+
+  <!-- Tier 2: Postmaster -->
+  <rect x="360" y="290" width="280" height="90" rx="18" fill="url(#server)" filter="url(#shadow)"/>
+  <text x="500" y="328" text-anchor="middle" class="box-title">Postmaster</text>
+  <text x="500" y="356" text-anchor="middle" class="box-text">Main server, spawns workers</text>
+
+  <!-- Tier 3: Processes -->
+  <rect x="60" y="460" width="270" height="110" rx="18" fill="url(#process)" filter="url(#shadow)"/>
+  <text x="195" y="500" text-anchor="middle" class="box-title">Backend Processes</text>
+  <text x="195" y="528" text-anchor="middle" class="box-text">One per connection</text>
+  <text x="195" y="550" text-anchor="middle" class="box-text">Parse, plan, execute SQL</text>
+
+  <rect x="365" y="460" width="270" height="110" rx="18" fill="url(#process)" filter="url(#shadow)"/>
+  <text x="500" y="500" text-anchor="middle" class="box-title">Background Workers</text>
+  <text x="500" y="528" text-anchor="middle" class="box-text">Autovacuum, checkpoints</text>
+  <text x="500" y="550" text-anchor="middle" class="box-text">Maintenance</text>
+
+  <rect x="670" y="460" width="270" height="110" rx="18" fill="url(#process)" filter="url(#shadow)"/>
+  <text x="805" y="500" text-anchor="middle" class="box-title">WAL / Writer</text>
+  <text x="805" y="528" text-anchor="middle" class="box-text">Persist changes first</text>
+  <text x="805" y="550" text-anchor="middle" class="box-text">Crash recovery</text>
+
+  <!-- Tier 4: Storage -->
+  <rect x="210" y="680" width="290" height="100" rx="18" fill="url(#storage)" filter="url(#shadow)"/>
+  <text x="355" y="720" text-anchor="middle" class="box-title">Data Files</text>
+  <text x="355" y="748" text-anchor="middle" class="box-text">Tables, indexes, heap pages</text>
+
+  <rect x="560" y="680" width="230" height="100" rx="18" fill="url(#storage)" filter="url(#shadow)"/>
+  <text x="675" y="720" text-anchor="middle" class="box-title">WAL Logs</text>
+  <text x="675" y="748" text-anchor="middle" class="box-text">Sequential change log</text>
+
+  <!-- Edges: Clients -> Postmaster -->
+  <line x1="500" y1="220" x2="500" y2="286" stroke="#64748B" stroke-width="3" marker-end="url(#arrow)"/>
+  <text x="516" y="258" class="edge">TCP</text>
+
+  <!-- Postmaster -> Processes -->
+  <line x1="430" y1="380" x2="230" y2="456" stroke="#64748B" stroke-width="3" marker-end="url(#arrow)"/>
+  <line x1="500" y1="380" x2="500" y2="456" stroke="#64748B" stroke-width="3" marker-end="url(#arrow)"/>
+  <line x1="570" y1="380" x2="770" y2="456" stroke="#64748B" stroke-width="3" marker-end="url(#arrow)"/>
+
+  <!-- Processes -> Storage -->
+  <line x1="230" y1="570" x2="330" y2="676" stroke="#64748B" stroke-width="3" marker-end="url(#arrow)"/>
+  <line x1="470" y1="570" x2="380" y2="676" stroke="#64748B" stroke-width="3" marker-end="url(#arrow)"/>
+  <line x1="805" y1="570" x2="695" y2="676" stroke="#64748B" stroke-width="3" marker-end="url(#arrow)"/>
+</svg>

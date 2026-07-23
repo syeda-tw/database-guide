@@ -1,0 +1,23 @@
+---
+description: Writing style for markdown study notes in this repo
+alwaysApply: true
+---
+
+# Study Notes Style
+
+This repository is for folders and Markdown notes about technologies that were practiced or learned.
+
+- Treat each note as a quick memory refresher, not a long-form article.
+- Write to the point with short sections, short bullets, and minimal filler.
+- Avoid long paragraphs, storytelling, repetition, and walls of text.
+- Optimize for fast scanning and a clear flow of understanding.
+- Use diagrams when they improve comprehension, especially for flows, relationships, or architecture.
+- Prefer practical structure such as:
+  - what it is
+  - why it matters
+  - key concepts
+  - setup or usage
+  - common pitfalls
+  - quick examples
+- When summarizing a topic, surface the most important ideas first.
+- Keep wording simple and direct so the reader can refresh quickly.
